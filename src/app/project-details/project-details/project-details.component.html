@@ -1,0 +1,53 @@
+<form [formGroup]="projectForm" (ngSubmit)="submit()">
+
+    <div class="row">
+        <div class="col-6">
+            <label for="firstName required" class="required">
+                First Name:
+            </label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName">
+            <app-field-error-display [displayError]="isErrorExists(firstName, 'required')"
+                errorMsg="First Name is required">
+            </app-field-error-display>
+        </div>
+        <div class="col-6">
+            <label for="lastName required">
+                Last Name:
+            </label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName">
+            <app-field-error-display [displayError]="isErrorExists(lastName, 'required')"
+                errorMsg="Last Name is required">
+            </app-field-error-display>
+        </div>
+        <div class="col-12">
+            <button type="submit">Submit</button>
+        </div>
+    </div>
+</form>
+
+
+<div *ngIf="state == false">
+    <h3>Add Todo</h3>
+    <form (submit)="addProject()">
+        <input type="text" [(ngModel)]="text" name="text">
+        <div class="col-12">
+            <button type="addProject">Add</button>
+        </div>
+    </form>
+</div>
+
+<div *ngIf="state == true">
+    <h3>Edit Todo</h3>
+    <form (submit)="updateProject()">
+        <input type="text" [(ngModel)]="text" name="text">
+        <div class="col-12">
+            <button type="updateProject">Update</button>
+        </div>
+    </form>
+</div>
+
+<h3>Todo List</h3>
+<ul *ngFor="let pro of project">
+    <span class="projectItem" (click)="editProject(pro)">{{pro}}</span><button class="deleteBtn"
+        (click)="deleteProject(pro)">Delete</button>
+</ul>
